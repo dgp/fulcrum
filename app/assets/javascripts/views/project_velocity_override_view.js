@@ -12,19 +12,7 @@ Fulcrum.ProjectVelocityOverrideView = Backbone.View.extend({
     "keydown input[name=override]": "keyCapture"
   },
 
-  template: _.template(
-              '<form>' +
-              '  <ul>' +
-              '    <li>Override Velocity:' +
-              '      <input name="override" size=2 value=<%= project.velocity() %> />' +
-              '    </li>' +
-              '    <li>' +
-              '      <button name="revert" value="revert" class="btn btn-mini">Revert</button>' +
-              '      <button name="apply" value="apply" class="btn btn-mini btn-primary">Apply</button>' +
-              '    </li>' +
-              '  </ul>' +
-              '</form>'
-            ),
+  template: JST['templates/project_velocity_override'],
 
   render: function() {
     this.$el.html(this.template({project: this.model}));
