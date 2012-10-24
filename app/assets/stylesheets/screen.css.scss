@@ -38,7 +38,7 @@ $aluminium-6:   #2e3436;
 body {
   margin: 0;
   padding: 0;
-  
+
   &#projects_show {
     overflow: hidden;
   }
@@ -370,46 +370,72 @@ div.story-title abbr.initials {
 }
 
 span.estimate {
-  padding: 0;
+  border: 1px solid #777;
+  padding: 0 0.2em;
   margin: 0 2px 0 0;
+  @include border-radius(3px);
+  vertical-align: top;
+  font-size: x-small;
+  font-weight: bold;
+  font-style: italic;
   display: inline-block;
   width: 13px;
   height: 13px;
   text-align: center;
-  font-size: 13px;
   line-height: 12px;
 }
 
 span.estimate_1 {
-
+  @include background(linear-gradient(bottom,
+      $orange 12.5%,
+      white 12.5%));
+}
+span.estimate_2 {
+  @include background(linear-gradient(bottom,
 }
 span.estimate_2 {
 
 }
 span.estimate_3 {
-
+  @include background(linear-gradient(bottom,
+      $orange 37.5%,
+      white 37.5%));
+}
+span.estimate_4 {
+  @include background(linear-gradient(bottom,
 }
 span.estimate_4 {
 
 }
 span.estimate_5 {
-
+  @include background(linear-gradient(bottom,
+      $orange 62.5%,
+      white 62.5%));
+}
+span.estimate_6 {
+  @include background(linear-gradient(bottom,
 }
 span.estimate_6 {
 
 }
 span.estimate_7 {
-
+  @include background(linear-gradient(bottom,
+      $orange 87.5%,
+      white 87.5%));
+}
+span.estimate_8 {
+  @include background(linear-gradient(bottom,
 }
 span.estimate_8 {
 
 }
 
 .story.release {
-
+  background-color: #333;
+  color: white;
 }
 .story.release:hover {
-
+  background-color: #222;
 }
 
 /* Story action buttons */
