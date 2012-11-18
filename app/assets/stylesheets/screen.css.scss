@@ -700,6 +700,11 @@ div.note {
     text-align: right;
   }
 }
+.popover div.note {
+ a.delete-note {
+    display: none;
+  }
+}
 
 div.task {
   background-color: white;
