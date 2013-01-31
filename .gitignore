@@ -7,3 +7,4 @@ tmp/
 .rvmrc
 .sass-cache/
 tags
+*.DS_Store
