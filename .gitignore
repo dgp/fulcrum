@@ -8,3 +8,4 @@ tmp/
 .sass-cache/
 tags
 *.DS_Store
+config/deploy.rb
