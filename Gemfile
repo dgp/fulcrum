@@ -13,7 +13,7 @@ end
 
 gem 'jquery-rails'
 
-gem 'devise'
+gem 'devise', "~> 2.0.5"
 gem 'transitions', '0.0.9', :require => ["transitions", "active_record/transitions"]
 gem 'i18n-js'
 gem 'configuration'
@@ -26,15 +26,23 @@ group :production do
 end
 
 group :development, :test do
-  gem 'sqlite3'
+  case ENV['DB']
+  when 'mysql'
+    gem 'mysql2'
+  when 'sqlite'
+    gem 'sqlite3'
+  when 'postgresql'
+    gem 'pg'
+  else
+    gem 'mysql2'
+  end
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', '1.7.0'
   gem 'jasmine', '1.1.0'
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'database_cleaner'
 end
-
 
 if ENV['TRAVIS'] == 'true'
   group :test do
