@@ -17,6 +17,7 @@ Fulcrum.Story = Backbone.Model.extend({
     this.maybeUnwrap(args);
 
     this.initNotes();
+    this.initTasks();
     this.setColumn();
 
   },
@@ -250,25 +251,32 @@ Fulcrum.Story = Backbone.Model.extend({
       return !note.isNew();
     });
   },
-  
+
   // Returns the CSS-class of the bootstrap button matching the transition type.
   transitionButtonClass: function(transitionValue) {
     switch (transitionValue) {
       case 'finish':
         return 'btn-primary';
-        break;
       case 'accept':
         return 'btn-success';
-        break;
       case 'reject':
         return 'btn-danger';
-        break;
       case 'deliver':
         return 'btn-warning';
-        break;
       default:
         return '';
     }
+  },
+
+  initTasks: function() {
+    this.tasks = new Fulcrum.TaskCollection();
+    this.tasks.story = this;
+    this.populateTasks();
+  },
+
+  populateTasks: function() {
+    var tasks = this.get("tasks") || [];
+    this.tasks.reset(tasks);
   }
 });
 

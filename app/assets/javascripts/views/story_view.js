@@ -11,7 +11,8 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
   initialize: function() {
     _.bindAll(this, "render", "highlight", "moveColumn", "setClassName",
       "transition", "estimate", "disableForm", "renderNotes",
-      "renderNotesCollection", "addEmptyNote");
+      "renderNotesCollection", "renderTasks", "renderTasksCollection",
+      "addEmptyTask", "addEmptyNote");
 
     // Rerender on any relevant change to the views story
     this.model.bind("change", this.render);
@@ -32,6 +33,9 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
     this.model.bind("change:notes", this.addEmptyNote);
     this.model.bind("change:notes", this.renderNotesCollection);
 
+    this.model.bind("change:tasks", this.addEmptyNote);
+    this.model.bind("change:tasks", this.renderNotesCollection);
+    
     this.model.bind("render", this.hoverBox());
     // Supply the model with a reference to it's own view object, so it can
     // remove itself from the page when destroy() gets called.
@@ -46,6 +50,9 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
 
     // Add an empty note to the collection
     this.addEmptyNote();
+
+    this.addEmptyTask();
+
   },
 
   events: {
@@ -335,8 +342,6 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
         })
       );
 
-
-
       this.$el.append(
         this.makeFormControl(function(div) {
           $(div).before(this.label("description", "Description"));
@@ -364,6 +369,7 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
       this.initTags();
 
       this.renderNotes();
+      this.renderTasks();
 
     } else {
       this.$el.removeClass('editing');
@@ -408,6 +414,16 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
     });
   },
 
+  renderTasks: function() {
+    if (this.model.tasks.length > 0) {
+      var el = this.$el;
+      el.append('<hr />');
+      el.append('<h3>' + I18n.t('tasks') + '</h3>');
+      el.append('<div class="tasklist"/>');
+      this.renderTasksCollection();
+    }
+  },
+
   renderNotes: function() {
     if (this.model.notes.length > 0) {
       var el = this.$el;
@@ -416,6 +432,34 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
       el.append('<div class="notelist"/>');
       this.renderNotesCollection();
     }
+  },
+
+  renderTasksCollection: function() {
+    var tasklist = this.$('div.tasklist');
+    tasklist.html('');
+    this.addEmptyTask();
+    this.model.tasks.each(function(task) {
+      var view;
+      if (task.isNew()) {
+        view = new Fulcrum.TaskForm({model:task});
+      } else {
+        view = new Fulcrum.TaskView({model:task});
+      }
+      tasklist.append(view.render().el);
+    });
+  },
+
+  addEmptyTask: function() {
+    if (this.model.isNew()) {
+      return;
+    }
+
+    var task = this.model.tasks.last();
+    if (task && task.isNew()) {
+      return;
+    }
+
+    this.model.tasks.add();
   },
 
   renderNotesCollection: function() {

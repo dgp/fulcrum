@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504152649) do
+ActiveRecord::Schema.define(:version => 20130222215035) do
 
   create_table "changesets", :force => true do |t|
     t.integer  "story_id"
@@ -59,6 +59,16 @@ ActiveRecord::Schema.define(:version => 20120504152649) do
     t.decimal  "position"
     t.string   "labels"
   end
+
+  create_table "tasks", :force => true do |t|
+    t.integer  "story_id"
+    t.string   "task"
+    t.boolean  "done",       :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "tasks", ["story_id"], :name => "index_tasks_on_story_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "",   :null => false
