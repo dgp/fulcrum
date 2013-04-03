@@ -9,3 +9,4 @@ tmp/
 tags
 *.DS_Store
 config/deploy.rb
+tags
