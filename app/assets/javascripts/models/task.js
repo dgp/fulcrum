@@ -10,6 +10,10 @@ Fulcrum.Task = Backbone.Model.extend({
 
   defaults: {
     done: false
+  },
+
+  isDone: function() {
+    return this.attributes.done;
   }
 
 });

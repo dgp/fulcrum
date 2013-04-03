@@ -19,8 +19,8 @@
 <div class="story-icons">
   <% if (view.saveInProgress) { %>
     <a class="icon icon-throbber" title="<%= I18n.t('saving') %>"></a>
-  <% } else { %><a
-      href="#" class="icon icon-chevron-right expand" title="<%= I18n.t('expand') %>"></a>
+  <% } else { %>
+    <a href="#" class="icon icon-chevron-right expand" title="<%= I18n.t('expand') %>"></a>
   <% } %>
 
   <span class="popover-activate">
@@ -29,7 +29,9 @@
     </span>
 
     <% if (story.estimated()) { %>
-      <span class="estimate estimate_<%= story.get('estimate') %>"><%= story.get('estimate') %></span>
+      <span class="estimate estimate_<%= story.get('estimate') %>">
+        <%= story.get('estimate') %>
+      </span>
     <% } else { %>
       <span class="estimate unknown"></span>
     <% } %>

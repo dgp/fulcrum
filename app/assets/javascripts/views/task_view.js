@@ -12,7 +12,7 @@ Fulcrum.TaskView = Fulcrum.FormView.extend({
 
   events: {
     "change input": "updateTask",
-    "click a.delete-task": "removeTask",
+    "click a.delete-task": "removeTask"
   },
 
   render: function() {

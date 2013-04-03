@@ -704,6 +704,27 @@ div.note {
     text-align: right;
   }
 }
+
+div.task {
+  background-color: white;
+  margin: 0.3em 0.3em 0.6em;
+
+  p {
+    padding: 0.3em;
+  }
+
+  div {
+    a, input {
+      vertical-align: top;
+    }
+
+    .task-text {
+      width: 85%;
+      display: inline-block;
+    }
+  }
+}
+
 .popover div.note {
  a.delete-note {
     display: none;

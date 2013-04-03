@@ -33,10 +33,10 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
     this.model.bind("change:notes", this.addEmptyNote);
     this.model.bind("change:notes", this.renderNotesCollection);
 
-    this.model.bind("change:tasks", this.addEmptyNote);
-    this.model.bind("change:tasks", this.renderNotesCollection);
+    this.model.bind("change:tasks", this.addEmptyTask);
+    this.model.bind("change:tasks", this.renderTasksCollection);
     
-    this.model.bind("render", this.hoverBox());
+    // this.model.bind("render", this.hoverBox());
     // Supply the model with a reference to it's own view object, so it can
     // remove itself from the page when destroy() gets called.
     this.model.view = this;
@@ -291,8 +291,6 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
         })
       );
 
-
-
       this.$el.append(
         this.makeFormControl({
           name: "estimate",
@@ -369,8 +367,8 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
 
       this.initTags();
 
-      this.renderNotes();
       this.renderTasks();
+      this.renderNotes();
 
     } else {
       this.$el.removeClass('editing');
@@ -521,12 +519,28 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
     // Gets called from a jQuery context, so this is set to the element that
     // the popover is bound to.
     var position = $(trigger).position();
+    var selfWidth = $(trigger).width();
+    var selfHeight = $(trigger).height();
     var windowWidth = $(window).width();
+    var windowHeight = $(window).height() || 100;
     // If the element is to the right of the vertical half way line in the
     // viewport, position the popover on the left.
-    if (position.left > (windowWidth / 2)) {
+    if (position.left < 10) {
       return 'left';
     }
+
+    if (position.left > (windowWidth - selfWidth)) {
+      return 'right';
+    }
+
+    if (position.top < 10) {
+      return 'bottom';
+    }
+
+    if (position.top > (windowHeight - selfHeight)) {
+      return 'top';
+    }
+
     return 'right';
   },
 
@@ -548,7 +562,6 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
     $div.append(controlWrapper);
     if (typeof content == 'function') {
       $div.addClass('unlabelled');
-      content.call(this, controlWrapper);
     } else if (typeof content == 'object') {
       $div.addClass(content.name || 'unlabelled');
       if (content.label) {

@@ -130,19 +130,14 @@ Fulcrum.Story = Backbone.Model.extend({
     switch (this.get('state')) {
       case 'started':
         return ["finish"];
-        break;
       case 'finished':
         return ["deliver"];
-        break;
       case 'delivered':
         return ["accept", "reject"];
-        break;
       case 'rejected':
         return ["restart"];
-        break;
       case 'accepted':
         return [];
-        break;
       default:
         return ["start"];
     }
@@ -277,6 +272,12 @@ Fulcrum.Story = Backbone.Model.extend({
   populateTasks: function() {
     var tasks = this.get("tasks") || [];
     this.tasks.reset(tasks);
+  },
+
+  hasTasks: function() {
+    return this.tasks.any(function(task) {
+      return !task.isNew();
+    });
   }
 });
 

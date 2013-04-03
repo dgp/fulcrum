@@ -60,6 +60,7 @@ class Project < ActiveRecord::Base
 
         # Generate notes for this story if any are present
         story.notes.from_csv_row(row)
+        story.tasks.from_csv_row(row)
 
         story
       end

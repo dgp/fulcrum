@@ -62,7 +62,26 @@ class Story < ActiveRecord::Base
 
   end
 
-  has_many :tasks
+  has_many :tasks do
+    def from_csv_row(row)
+      project = proxy_association.owner.project
+      project.suppress_notifications
+
+      tasks = []
+      row.each do |header, value|
+        if header == 'Task' && value
+          task = build(:task => value)
+          task.save
+          tasks << task
+        elsif header == 'Task Status' && value
+          task = tasks[-1]
+          task.done = ((value == 'completed') ? true : false)
+          task.save
+        end
+      end
+      tasks
+    end
+  end
 
   # This attribute is used to store the user who is acting on a story, for
   # example delivering or modifying it.  Usually set by the controller.

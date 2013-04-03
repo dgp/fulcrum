@@ -24,3 +24,13 @@
   <div class="note"><%= JST['templates/note']({note:note}) %></div>
   <% }); %>
 <% } %>
+<% if (story.hasTasks()) { %>
+  <h5 class="title"><%= I18n.t('tasks') %></h5>
+  <% _.each(story.tasks.saved(), function(task) { %>
+    <% if (task.isDone()) { %>
+      <div class="task done"><%= JST['templates/task']({task:task, showDelete:false}) %></div>
+    <% } else { %>
+      <div class="task"><%= JST['templates/task']({task:task, showDelete:false}) %></div>
+    <% } %>
+  <% }); %>
+<% } %>
