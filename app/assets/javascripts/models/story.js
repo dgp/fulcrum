@@ -250,11 +250,13 @@ Fulcrum.Story = Backbone.Model.extend({
   // Returns the CSS-class of the bootstrap button matching the transition type.
   transitionButtonClass: function(transitionValue) {
     switch (transitionValue) {
+      case 'start':
       case 'finish':
         return 'btn-primary';
       case 'accept':
         return 'btn-success';
       case 'reject':
+      case 'restart':
         return 'btn-danger';
       case 'deliver':
         return 'btn-warning';

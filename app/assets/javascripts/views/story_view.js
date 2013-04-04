@@ -284,6 +284,7 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
 
       this.$el.append(
         this.makeFormControl(function(div) {
+          $(div).addClass('edit-actions');
           $(div).append(this.submit());
           if (!this.model.isNew()) {
             $(div).append(this.destroy());
