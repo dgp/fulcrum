@@ -181,7 +181,7 @@ DEPENDENCIES
   database_cleaner
   devise (~> 2.0.5)
   ejs
-  factory_girl_rails
+  factory_girl_rails (= 1.7.0)
   fastercsv (= 1.5.3)
   i18n-js
   jasmine (= 1.1.0)

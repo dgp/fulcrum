@@ -36,7 +36,7 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
     this.model.bind("change:tasks", this.addEmptyTask);
     this.model.bind("change:tasks", this.renderTasksCollection);
     
-    // this.model.bind("render", this.hoverBox());
+    this.model.bind("render", this.hoverBox());
     // Supply the model with a reference to it's own view object, so it can
     // remove itself from the page when destroy() gets called.
     this.model.view = this;
@@ -56,7 +56,8 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
   },
 
   events: {
-    "click": "startEdit",
+    "click a.expand": "startEdit",
+    "click a.collapse": "saveEdit",
     "click #submit": "saveEdit",
     "click #cancel": "cancelEdit",
     "click .transition": "transition",
@@ -272,22 +273,22 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
       this.$el.append(
         this.makeFormControl(function(div) {
           $(div).addClass('story-controls');
-          $(div).append(this.submit());
           if (!this.model.isNew()) {
             $(div).append(
               this.make("a", {'class': "collapse icon icon-chevron-down"})
             );
           }
-          $(div).append(this.cancel());
+          $(div).append(this.textField("title", {'placeholder': 'Story title'}));
         })
       );
 
       this.$el.append(
         this.makeFormControl(function(div) {
-          $(div).append(this.textField("title", {
-            'class' : 'title',
-            'placeholder': I18n.t('story title')
-          }));
+          $(div).append(this.submit());
+          if (!this.model.isNew()) {
+            $(div).append(this.destroy());
+          }
+          $(div).append(this.cancel());
         })
       );
 
@@ -562,6 +563,7 @@ Fulcrum.StoryView = Fulcrum.FormView.extend({
     $div.append(controlWrapper);
     if (typeof content == 'function') {
       $div.addClass('unlabelled');
+      content.call(this, controlWrapper);
     } else if (typeof content == 'object') {
       $div.addClass(content.name || 'unlabelled');
       if (content.label) {
